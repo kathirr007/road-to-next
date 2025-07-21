@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack -p 4300",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "npx eslint",
+    "lint:fix": "npx eslint --quiet --cache --fix"
   },
   "dependencies": {
     "next": "15.4.2",
