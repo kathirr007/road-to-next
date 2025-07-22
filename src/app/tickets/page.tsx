@@ -5,23 +5,30 @@ import { ticketDetailsPath } from '@/paths'
 
 function ticketsPage() {
   return (
-    <div>
-      <h1>Tickets list page</h1>
-      <p>Here you can find a list of all tickets.</p>
+    <div className="flex-1 flex flex-col gap-y-8">
+      <div>
+        <h2 className="text-3xl font-bold tracking-tight">Tickets list page</h2>
+        <p className="text-sm text-muted-foreground">
+          All your tickets at one place. Click on a ticket to view its details.
+        </p>
+      </div>
 
-      { initialData.map(ticket => (
-        <div key={ticket.id}>
-          <Link href={ticketDetailsPath(ticket.id)} className="underline text-teal-500 font-semibold">
-            <h2>{ticket.title}</h2>
-          </Link>
-          <p>{ticket.content}</p>
-          <p>
-            Status:
-            {ticket.status}
-          </p>
-          <hr />
-        </div>
-      )) }
+      <div className="flex-1 flex flex-col items-center gap-y-4 animate-fade-from-top">
+
+        { initialData.map(ticket => (
+          <div key={ticket.id} className="w-full max-w-[420px] p-4 border border-slate-400 rounded">
+            <h3 className="text-lg font-semibold truncate">{ticket.title}</h3>
+
+            <p className="truncate text-sm text-slate-600">
+              {ticket.content}
+            </p>
+
+            <Link href={ticketDetailsPath(ticket.id)} className="underline text-teal-500 font-semibold">
+              View details
+            </Link>
+          </div>
+        )) }
+      </div>
     </div>
   )
 }
