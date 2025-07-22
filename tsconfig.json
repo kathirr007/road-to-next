@@ -4,10 +4,12 @@
     "target": "ES2017",
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": "./",
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["src/*"],
+      "@root/*": ["./*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
