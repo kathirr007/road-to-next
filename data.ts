@@ -1,4 +1,4 @@
-import type { Ticket } from '@/types'
+import type { Ticket } from '@/features/ticket/types'
 
 export const initialData: Ticket[] = [
   {
