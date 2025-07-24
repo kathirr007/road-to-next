@@ -7,7 +7,7 @@ interface PlaceholderProps {
   button?: React.ReactElement
 }
 
-const defaultIcon = <LucideMessageSquareWarning className="w-12 h-12 text-muted-foreground" />
+const defaultIcon = <LucideMessageSquareWarning className="w-24 h-24 text-muted-foreground" />
 const defaultButton = <div className="h-10" />
 
 function Placeholder({ label, icon = defaultIcon, button = defaultButton }: PlaceholderProps) {

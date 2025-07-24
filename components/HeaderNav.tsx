@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { LucideKanbanSquare } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import ThemSwitcher from '@/components/theme/ThemSwitcher'
 import { buttonVariants } from '@/components/ui/button'
 import { aboutPath, homePath, ticketsPath } from '@/paths'
 
@@ -18,10 +19,12 @@ export function HeaderNav() {
           <h2 className="text-lg font-semibold">The Road to Tickets</h2>
         </Link>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-2">
+
         <Link href={aboutPath()} className={buttonVariants({ variant: pathname === aboutPath() ? 'default' : 'outline' })}>
           About
         </Link>
+        <ThemSwitcher />
         <Link href={ticketsPath()} className={clsx(buttonVariants({ variant: pathname === ticketsPath() ? 'default' : 'outline' }))}>
           Tickets
         </Link>

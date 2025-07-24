@@ -3,6 +3,7 @@ import React from 'react'
 import { Placeholder } from '@/components/Placeholder'
 import { Button } from '@/components/ui/button'
 import { initialData } from '@/data'
+import { TicketItem } from '@/features/ticket/components/TicketItem'
 import { ticketsPath } from '@/paths'
 
 export interface TicketPageProps {
@@ -34,20 +35,8 @@ async function TicketDetails({ params }: TicketPageProps) {
   }
 
   return (
-    <div className="animate-slide-in-from-left">
-      <Button>
-        <Link href={ticketsPath()} className="underline text-teal-500 font-semibold">
-          Back to tickets
-        </Link>
-      </Button>
-
-      <h2>
-        Ticket Details (
-        {ticketId}
-        )
-      </h2>
-      <h2>{foundTicket.title}</h2>
-      <p>{foundTicket.content}</p>
+    <div className="flex justify-center animate-slide-in-from-left">
+      <TicketItem ticket={foundTicket} isDetail />
     </div>
   )
 }
