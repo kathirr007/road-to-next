@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { initialData } from '@/data'
 import { ticketDetailsPath } from '@/paths'
 
@@ -26,6 +27,8 @@ function ticketsPage() {
           All your tickets at one place. Click on a ticket to view its details.
         </p>
       </div>
+
+      <Separator />
 
       <div className="flex-1 flex flex-col items-center gap-y-4 animate-fade-in-from-top">
 
