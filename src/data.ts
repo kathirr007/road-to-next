@@ -11,12 +11,24 @@ export const initialData: Ticket[] = [
     id: 2,
     title: 'Ticket 2',
     content: 'Description for ticket 2',
-    status: 'OPEN',
+    status: 'IN_PROGRESS',
   },
   {
     id: 3,
     title: 'Ticket 3',
     content: 'Description for ticket 3',
     status: 'DONE',
+  },
+  {
+    id: 4,
+    title: 'Ticket 4',
+    content: 'Description for ticket 4',
+    status: 'OPEN',
+  },
+  {
+    id: 5,
+    title: 'Ticket 5',
+    content: 'Description for ticket 5',
+    status: 'IN_PROGRESS',
   },
 ]

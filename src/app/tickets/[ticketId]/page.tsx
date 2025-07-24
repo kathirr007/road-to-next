@@ -29,7 +29,7 @@ async function TicketDetails({ params }: TicketPageProps) {
   }
 
   return (
-    <div>
+    <div className="animate-slide-in-from-left">
       <Button>
         <Link href={ticketsPath()} className="underline text-teal-500 font-semibold">
           Back to tickets
