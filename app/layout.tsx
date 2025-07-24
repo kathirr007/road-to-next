@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 // import { Geist, Geist_Mono } from "next/font/google";
-import { NavLinks } from '@/components/NavLinks'
+import { HeaderNav } from '@/components/HeaderNav'
 import './globals.css'
 
 /* const geistSans = Geist({
@@ -39,7 +39,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} antialiased`}
       >
-        <NavLinks />
+        <HeaderNav />
         <main className="min-h-screen flex-1 overflow-y-auto overflow-x-hidden py-24 px-8 bg-secondary/20 flex flex-col">
           {children}
         </main>

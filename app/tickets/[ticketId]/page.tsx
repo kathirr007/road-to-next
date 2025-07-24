@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
-import Button from '@/components/Button'
+import { Placeholder } from '@/components/Placeholder'
+import { Button } from '@/components/ui/button'
 import { initialData } from '@/data'
 import { ticketsPath } from '@/paths'
 
@@ -17,14 +18,18 @@ async function TicketDetails({ params }: TicketPageProps) {
 
   if (!foundTicket) {
     return (
-      <>
-        <Button>
-          <Link href={ticketsPath()} className="underline text-teal-500 font-semibold">
-            Back to tickets
-          </Link>
-        </Button>
-        <div>Ticket not found</div>
-      </>
+      <div className="flex flex-1">
+        <Placeholder
+          label="Ticket not found"
+          button={(
+            <Button asChild variant="outline">
+              <Link href={ticketsPath()}>
+                Back to tickets
+              </Link>
+            </Button>
+          )}
+        />
+      </div>
     )
   }
 

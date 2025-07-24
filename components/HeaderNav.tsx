@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 import { buttonVariants } from '@/components/ui/button'
 import { aboutPath, homePath, ticketsPath } from '@/paths'
 
-export function NavLinks() {
+export function HeaderNav() {
   const pathname = usePathname()
 
   return (
