@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-y-8">
       <div>
-        <h1 className="text-3xl font-bold">Welcome to the Road to Next.js</h1>
+        <h2 className="text-3xl font-bold">Welcome to the Road to Next.js</h2>
         <p className="text-lg">
           This is a basic setup for a Next.js application with TypeScript and Tailwind CSS.
         </p>

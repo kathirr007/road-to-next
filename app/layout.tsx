@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-// import { Geist, Geist_Mono } from "next/font/google";
 import localFont from 'next/font/local'
-import Link from 'next/link'
-import { aboutPath, homePath, ticketsPath } from '@/paths'
+// import { Geist, Geist_Mono } from "next/font/google";
+import { NavLinks } from '@/components/NavLinks'
 import './globals.css'
 
 /* const geistSans = Geist({
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
   description: 'My Road to Next.js application',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -40,21 +39,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} antialiased`}
       >
-        <nav className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur w-full flex py-2.5 px-5 justify-between">
-          <div>
-            <Link href={homePath()} className="underline text-teal-500 font-semibold">
-              Home
-            </Link>
-          </div>
-          <div className="flex gap-4">
-            <Link href={aboutPath()} className="underline text-teal-500 font-semibold">
-              About
-            </Link>
-            <Link href={ticketsPath()} className="underline text-teal-500 font-semibold">
-              Tickets
-            </Link>
-          </div>
-        </nav>
+        <NavLinks />
         <main className="min-h-screen flex-1 overflow-y-auto overflow-x-hidden py-24 px-8 bg-secondary/20 flex flex-col">
           {children}
         </main>

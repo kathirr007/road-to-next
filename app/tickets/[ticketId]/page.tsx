@@ -36,11 +36,11 @@ async function TicketDetails({ params }: TicketPageProps) {
         </Link>
       </Button>
 
-      <h1>
+      <h2>
         Ticket Details (
         {ticketId}
         )
-      </h1>
+      </h2>
       <h2>{foundTicket.title}</h2>
       <p>{foundTicket.content}</p>
     </div>
