@@ -42,6 +42,6 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*": "eslint --quiet --cache --fix"
+    "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "eslint --cache --fix"
   }
 }
