@@ -25,10 +25,4 @@ export const initialData: Ticket[] = [
     content: 'Description for ticket 4',
     status: 'OPEN',
   },
-  {
-    id: 5,
-    title: 'Ticket 5',
-    content: 'Description for ticket 5',
-    status: 'IN_PROGRESS',
-  },
 ]
