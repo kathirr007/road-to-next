@@ -41,7 +41,7 @@
     "typescript": "^5"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
     "*": "eslint --quiet --cache --fix"
