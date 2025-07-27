@@ -12,7 +12,8 @@
     "prepare": "husky",
     "postinstall": "prisma generate",
     "prisma-db-push": "npx prisma db push",
-    "prisma-seed": "tsx prisma/seed.ts"
+    "prisma-seed": "tsx prisma/seed.ts",
+    "prisma-studio": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "6.12.0",
