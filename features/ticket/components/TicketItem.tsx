@@ -1,6 +1,6 @@
 import type { Ticket } from '@prisma/client'
 import clsx from 'clsx'
-import { LucideSquareArrowOutUpRight, LucideTrash2 } from 'lucide-react'
+import { LucidePencil, LucideSquareArrowOutUpRight, LucideTrash2 } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card'
 import { deleteTicket } from '@/features/ticket/actions/delete-ticket'
 import { TICKET_ICONS } from '@/features/ticket/constants'
-import { ticketDetailsPath } from '@/paths'
+import { ticketDetailsPath, ticketEditPath } from '@/paths'
 
 interface TicketItemProps {
   ticket: Ticket
@@ -23,8 +23,19 @@ function TicketItem({ ticket, isDetail }: TicketItemProps) {
   const detailButton = (
     <>
       <Button asChild variant="outline" size="icon">
-        <Link href={ticketDetailsPath(ticket.id)}>
-          <LucideSquareArrowOutUpRight />
+        {/* prefetch prop will enable next prefetching for all link components used */}
+        <Link prefetch href={ticketDetailsPath(ticket.id)}>
+          <LucideSquareArrowOutUpRight className="h-4 w-4" />
+        </Link>
+      </Button>
+    </>
+  )
+  const editButton = (
+    <>
+      <Button asChild variant="outline" size="icon">
+        {/* prefetch prop will enable next prefetching for all link components used */}
+        <Link prefetch href={ticketEditPath(ticket.id)}>
+          <LucidePencil className="h-4 w-4" />
         </Link>
       </Button>
     </>
@@ -55,9 +66,23 @@ function TicketItem({ ticket, isDetail }: TicketItemProps) {
           </span>
         </CardContent>
       </Card>
-      {
-        isDetail ? deleteButton : detailButton
-      }
+      <div className="flex flex-col gap-y-2">
+        {
+          isDetail
+            ? (
+                <>
+                  {editButton}
+                  {deleteButton}
+                </>
+              )
+            : (
+                <>
+                  {detailButton}
+                  {editButton}
+                </>
+              )
+        }
+      </div>
     </div>
   )
 }
