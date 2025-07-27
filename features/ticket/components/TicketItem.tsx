@@ -1,4 +1,4 @@
-import type { Ticket } from '@/features/ticket/types'
+import type { Ticket } from '@prisma/client'
 import clsx from 'clsx'
 import { LucideSquareArrowOutUpRight } from 'lucide-react'
 import Link from 'next/link'
