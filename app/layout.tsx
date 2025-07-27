@@ -1,21 +1,8 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-// import { Geist, Geist_Mono } from "next/font/google";
 import { HeaderNav } from '@/components/HeaderNav'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import './globals.css'
-
-/* const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-}); */
 
 const geistSans = localFont({
   src: '../fonts/Geist-Geist_Mono.woff2',
@@ -38,7 +25,7 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body
-        className={`${geistSans.variable} antialiased`}
+        className={`${geistSans.className} antialiased`}
       >
         <ThemeProvider>
           <HeaderNav />
