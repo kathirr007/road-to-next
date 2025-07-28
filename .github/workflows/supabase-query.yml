@@ -1,0 +1,19 @@
+name: Keep Supabase Active
+on:
+  schedule:
+    - cron: "0 0 * * 0"  # Runs weekly on Sunday at midnight UTC
+  workflow_dispatch:     # Add this to enable manual runs
+  
+jobs:
+  select-counts-query:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}  # Use GitHub Secret
+    steps:
+      - name: Ping Supabase Health Check
+        run: |
+          curl -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/Ticket?select=count' \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+          -H "Content-Type: application/json" \
+          -H "Prefer: count=exact"
