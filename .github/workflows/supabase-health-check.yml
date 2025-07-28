@@ -5,7 +5,7 @@ on:
   workflow_dispatch:     # Add this to enable manual runs
 
 jobs:
-  ping:
+  health-check:
     runs-on: ubuntu-latest
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}  # Use GitHub Secret
