@@ -10,7 +10,7 @@ jobs:
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}  # Use GitHub Secret
     steps:
-      - name: Ping Supabase Health Check
+      - name: Query Supabase Database table Ticket
         run: |
           curl -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/Ticket?select=count' \
           -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
