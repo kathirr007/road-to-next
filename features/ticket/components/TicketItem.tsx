@@ -1,6 +1,6 @@
 import type { Ticket } from '@prisma/client'
 import clsx from 'clsx'
-import { LucidePencil, LucideSquareArrowOutUpRight, LucideTrash2 } from 'lucide-react'
+import { LucideArrowLeft, LucidePencil, LucideSquareArrowOutUpRight, LucideTrash2 } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card'
 import { deleteTicket } from '@/features/ticket/actions/delete-ticket'
 import { TICKET_ICONS } from '@/features/ticket/constants'
-import { ticketDetailsPath, ticketEditPath } from '@/paths'
+import { ticketDetailsPath, ticketEditPath, ticketsPath } from '@/paths'
 
 interface TicketItemProps {
   ticket: Ticket
@@ -20,6 +20,16 @@ interface TicketItemProps {
 }
 
 function TicketItem({ ticket, isDetail }: TicketItemProps) {
+  const backButton = (
+    <>
+      <Button asChild variant="outline" size="icon">
+        {/* prefetch prop will enable next prefetching for all link components used */}
+        <Link prefetch href={ticketsPath()}>
+          <LucideArrowLeft className="h-4 w-4" />
+        </Link>
+      </Button>
+    </>
+  )
   const detailButton = (
     <>
       <Button asChild variant="outline" size="icon">
@@ -71,6 +81,7 @@ function TicketItem({ ticket, isDetail }: TicketItemProps) {
           isDetail
             ? (
                 <>
+                  {backButton}
                   {editButton}
                   {deleteButton}
                 </>
