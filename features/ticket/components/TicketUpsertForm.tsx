@@ -1,10 +1,10 @@
 'use client'
 
 import type { Ticket } from '@prisma/client'
-import { LucideLoaderCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useTransition } from 'react'
+import React from 'react'
+import SubmitButton from '@/components/form/SubmitButton'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -19,16 +19,8 @@ interface TicketUpsertFormProps {
 function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
   const router = useRouter()
 
-  const [isPending, startTransition] = useTransition()
-
-  const upsertTicketAction = (formData: FormData) => {
-    startTransition(async () => {
-      await upsertTicket.bind(null, ticket?.id)(formData)
-    })
-  }
-
   return (
-    <form action={upsertTicketAction} className="flex flex-col gap-y-2">
+    <form action={upsertTicket.bind(null, ticket?.id)} className="flex flex-col gap-y-2">
       <Input name="id" defaultValue={ticket?.id} hidden />
       <Label htmlFor="title">
         Title
@@ -46,10 +38,7 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
             </Link>
           </Button>
         )}
-        <Button type="submit" className="flex-1  cursor-pointer">
-          {isPending && <LucideLoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
-          {ticket ? 'Update Ticket' : 'Create Ticket'}
-        </Button>
+        <SubmitButton label={ticket ? 'Update Ticket' : 'Create Ticket'} />
       </div>
     </form>
   )
