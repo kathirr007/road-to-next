@@ -1,4 +1,4 @@
-name: Keep Supabase Active
+name: Query Supabase Database to Keep Active
 on:
   schedule:
     - cron: "0 0 * * 0"  # Runs weekly on Sunday at midnight UTC
