@@ -1,0 +1,17 @@
+name: Keep Supabase Active
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs daily at midnight UTC
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}  # Use GitHub Secret
+    steps:
+      - name: Ping Supabase Health Check
+        run: |
+          curl https://$SUPABASE_URL.supabase.co/health
+          # Or directly use the secret:
+          # curl https://${{ secrets.SUPABASE_URL }}.supabase.co/health \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}"
