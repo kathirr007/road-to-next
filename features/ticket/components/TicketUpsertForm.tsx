@@ -3,7 +3,7 @@
 import type { Ticket } from '@prisma/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useActionState } from 'react'
 import SubmitButton from '@/components/form/SubmitButton'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,17 +19,19 @@ interface TicketUpsertFormProps {
 function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
   const router = useRouter()
 
+  const [actionState, action] = useActionState(upsertTicket.bind(null, ticket?.id), { message: '' })
+
   return (
-    <form action={upsertTicket.bind(null, ticket?.id)} className="flex flex-col gap-y-2">
+    <form action={action} className="flex flex-col gap-y-2">
       <Input name="id" defaultValue={ticket?.id} hidden />
       <Label htmlFor="title">
         Title
       </Label>
-      <Input id="title" name="title" defaultValue={ticket?.title} />
+      <Input id="title" name="title" defaultValue={(actionState.payload?.get('title') as string) ?? ticket?.title} />
       <Label htmlFor="content">
         Content
       </Label>
-      <Textarea id="content" name="content" defaultValue={ticket?.content} />
+      <Textarea id="content" name="content" defaultValue={(actionState.payload?.get('content') as string) ?? ticket?.content} />
       <div className="flex w-full gap-x-2">
         {ticket && (
           <Button type="button" onClick={() => router.back()} asChild variant="outline" className="flex-1 cursor-pointer">
@@ -39,7 +41,9 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
           </Button>
         )}
         <SubmitButton label={ticket ? 'Update Ticket' : 'Create Ticket'} />
+
       </div>
+      {actionState.message}
     </form>
   )
 }
