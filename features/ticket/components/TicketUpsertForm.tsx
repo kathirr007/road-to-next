@@ -4,7 +4,10 @@ import type { Ticket } from '@prisma/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useActionState } from 'react'
+import FieldError from '@/components/form/FieldError'
+import { useActionFeedback } from '@/components/form/hooks/use-action-feedback'
 import SubmitButton from '@/components/form/SubmitButton'
+import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -19,7 +22,16 @@ interface TicketUpsertFormProps {
 function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
   const router = useRouter()
 
-  const [actionState, action] = useActionState(upsertTicket.bind(null, ticket?.id), { message: '' })
+  const [actionState, action] = useActionState(upsertTicket.bind(null, ticket?.id), EMPTY_ACTION_STATE)
+
+  useActionFeedback(actionState, {
+    onSuccess: ({ actionState }) => {
+      console.log('Ticket upserted successfully:', actionState.message)
+    },
+    onError: ({ actionState }) => {
+      console.error('Error upserting ticket:', actionState.message)
+    },
+  })
 
   return (
     <form action={action} className="flex flex-col gap-y-2">
@@ -28,10 +40,12 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
         Title
       </Label>
       <Input id="title" name="title" defaultValue={(actionState.payload?.get('title') as string) ?? ticket?.title} />
+      <FieldError actionState={actionState} name="title" />
       <Label htmlFor="content">
         Content
       </Label>
       <Textarea id="content" name="content" defaultValue={(actionState.payload?.get('content') as string) ?? ticket?.content} />
+      <FieldError actionState={actionState} name="content" />
       <div className="flex w-full gap-x-2">
         {ticket && (
           <Button type="button" onClick={() => router.back()} asChild variant="outline" className="flex-1 cursor-pointer">

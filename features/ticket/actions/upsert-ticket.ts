@@ -1,9 +1,11 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import type { ActionState } from '@/components/form/utils/to-action-state'
 
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import z from 'zod'
+import { fromErrorToActionState, toActionState } from '@/components/form/utils/to-action-state'
 import { prisma } from '@/lib/prisma'
 import { ticketDetailsPath, ticketsPath } from '@/paths'
 
@@ -12,7 +14,7 @@ const upsertTicketSchema = z.object({
   content: z.string().min(10).max(1000),
 })
 
-export async function upsertTicket(id: string | undefined, _actionState: { message: string, payload?: FormData }, formData: FormData) {
+export async function upsertTicket(id: string | undefined, _actionState: ActionState, formData: FormData) {
   try {
     const data = upsertTicketSchema.parse({
       title: formData.get('title') as string,
@@ -28,11 +30,9 @@ export async function upsertTicket(id: string | undefined, _actionState: { messa
     })
   }
   catch (error) {
-    console.error('Error upserting ticket:', error)
-    return {
-      message: 'Failed to upsert ticket. Please try again later.',
-      payload: formData,
-    }
+    // console.error('Error upserting ticket:', error)
+
+    return fromErrorToActionState(error, formData)
   }
 
   revalidatePath(ticketsPath())
@@ -41,7 +41,5 @@ export async function upsertTicket(id: string | undefined, _actionState: { messa
     redirect(`${ticketDetailsPath(id)}`)
   }
 
-  return {
-    message: 'Ticket successfully upserted',
-  }
+  return toActionState('SUCCESS', 'Ticket created successfully.')
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import { Toaster } from 'sonner'
 import { HeaderNav } from '@/components/HeaderNav'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import './globals.css'
@@ -41,6 +42,7 @@ export default async function RootLayout({
               The Road to Next.js
             </p>
           </footer>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
