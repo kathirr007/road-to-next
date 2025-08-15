@@ -4,6 +4,7 @@ import type { Ticket } from '@prisma/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useActionState } from 'react'
+import { toast } from 'sonner'
 import FieldError from '@/components/form/FieldError'
 import { useActionFeedback } from '@/components/form/hooks/use-action-feedback'
 import SubmitButton from '@/components/form/SubmitButton'
@@ -26,10 +27,16 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
 
   useActionFeedback(actionState, {
     onSuccess: ({ actionState }) => {
-      console.log('Ticket upserted successfully:', actionState.message)
+      // console.log('Ticket upserted successfully:', actionState.message)
+      toast.success(actionState.message, {
+        description: 'Your ticket has been successfully created or updated.',
+      })
     },
     onError: ({ actionState }) => {
-      console.error('Error upserting ticket:', actionState.message)
+      // console.error('Error upserting ticket:', actionState.message)
+      toast.error(actionState.message, {
+        description: 'There was an error while processing your request. Please check the form for errors.',
+      })
     },
   })
 
