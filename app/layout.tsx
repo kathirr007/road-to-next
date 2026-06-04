@@ -27,6 +27,7 @@ export default async function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body
         className={`${geistSans.className} antialiased`}
+        suppressHydrationWarning
       >
         <ThemeProvider>
           <HeaderNav />
