@@ -27,7 +27,7 @@ async function TicketsPage({ searchParams }: { searchParams: Promise<Record<stri
 
       <ErrorBoundary errorComponent={Error}>
         <Suspense fallback={<Spinner />}>
-          <div key={`page-${currentPage}`} className="animate-in fade-in animate-slide-in-from-right-8 duration-300">
+          <div key={`page-${currentPage}`} className="animate-in fade-in slide-in-from-right duration-300">
             <TicketsList currentPage={currentPage} searchParams={params} />
           </div>
         </Suspense>
