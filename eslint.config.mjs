@@ -6,5 +6,7 @@ export default antfu({
 }, {
   rules: {
     'no-console': 'off',
+    'unused-imports/no-unused-vars': 'off',
+    'node/prefer-global/process': 'off',
   },
 })
