@@ -3,6 +3,7 @@ name: Keep Workflow Active
 on:
   schedule:
     - cron: '0 0 1 * *' # Monthly
+  workflow_dispatch:       # Enable manual runs
 
 jobs:
   keep-alive:
