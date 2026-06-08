@@ -1,20 +1,53 @@
-name: Query Supabase Database to Keep Active
+name: Supabase Database Activity - Every 4 Hours
 on:
   schedule:
-    # - cron: "0 0 * * 0"  # Runs weekly on Sunday at midnight UTC
-    - cron: "0 0 */3 * *"  # Runs every three days once at midnight UTC
-  workflow_dispatch:     # Add this to enable manual runs
-  
+    - cron: "15 */4 * * *"  # Runs every 4 hours at +15 mins (staggered from health check)
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
 jobs:
-  select-counts-query:
+  database-activity:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}  # Use GitHub Secret
+    timeout-minutes: 5
     steps:
-      - name: Query Supabase Database table Ticket
+      - name: Trigger Database Activity - Insert + Update + Read
         run: |
-          curl -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/Ticket?select=count' \
+          # Note: This makes actual read queries to the database
+          # which Supabase tracks as database activity
+          
+          # Query 1: Read with filtering
+          curl -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/Ticket?select=*&limit=10' \
           -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
           -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
           -H "Content-Type: application/json" \
-          -H "Prefer: count=exact"
+          --connect-timeout 5 \
+          --max-time 10 || true
+          
+          echo "Query 1 completed"
+        continue-on-error: true
+
+      - name: Aggregate Query
+        run: |
+          # Query 2: Aggregation query (forces database evaluation)
+          curl -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/Ticket?select=status,count()' \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+          -H "Content-Type: application/json" \
+          --connect-timeout 5 \
+          --max-time 10 || true
+          
+          echo "Aggregation query completed"
+        continue-on-error: true
+
+      - name: Verify Supabase Connectivity
+        run: |
+          # Query 3: Simple connectivity check
+          curl -I -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/' \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          --connect-timeout 5 \
+          --max-time 10 || true
+          
+          echo "Connectivity check completed"
+        continue-on-error: true

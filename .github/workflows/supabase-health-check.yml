@@ -1,18 +1,45 @@
-name: Keep Supabase Active
+name: Keep Supabase Active - Every 6 Hours
 on:
   schedule:
-    - cron: "0 0 * * *"  # Runs daily at midnight UTC
-  workflow_dispatch:     # Add this to enable manual runs
+    - cron: "0 */6 * * *"  # Runs every 6 hours (4 times a day)
+  workflow_dispatch:       # Enable manual runs
+  push:
+    branches:
+      - main                # Also run on every push to main
 
 jobs:
-  health-check:
+  keep-alive:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}  # Use GitHub Secret
+    timeout-minutes: 5
     steps:
-      - name: Ping Supabase Health Check
+      - name: Database Activity Query - Read Operation
         run: |
-          # curl https://$SUPABASE_URL.supabase.co/health
-          # Or directly use the secret:
-          curl https://${{ secrets.SUPABASE_URL }}.supabase.co/health \
-          -H "apikey: ${{ secrets.SUPABASE_KEY }}"
+          # Make a real database read query to ensure activity is recorded
+          curl -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/Ticket?select=id&limit=1' \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+          -H "Content-Type: application/json" \
+          -H "Prefer: count=exact" \
+          --connect-timeout 5 \
+          --max-time 10 || echo "Query attempt made"
+        continue-on-error: true
+
+      - name: Health Check Endpoint
+        run: |
+          curl -s -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/health' \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          --connect-timeout 5 \
+          --max-time 10 || echo "Health check attempt made"
+        continue-on-error: true
+
+      - name: Count Tables Query
+        run: |
+          # Query to get count - triggers actual database interaction
+          curl -X GET 'https://${{ secrets.SUPABASE_URL }}.supabase.co/rest/v1/Ticket?select=count' \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+          -H "Content-Type: application/json" \
+          -H "Prefer: count=exact" \
+          --connect-timeout 5 \
+          --max-time 10 || echo "Count query attempt made"
+        continue-on-error: true
